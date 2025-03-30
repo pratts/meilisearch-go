@@ -1586,6 +1586,10 @@ func easyjson6601e8cdDecodeGithubComMeilisearchMeilisearchGo12(in *jlexer.Lexer,
 			out.RawDocumentDbSize = int64(in.Int64())
 		case "avgDocumentSize":
 			out.AvgDocumentSize = int64(in.Int64())
+		case "numberOfEmbeddedDocuments":
+			out.NumberOfEmbeddedDocuments = int64(in.Int64())
+		case "numberOfEmbeddings":
+			out.NumberOfEmbeddings = int64(in.Int64())
 		default:
 			in.SkipRecursive()
 		}
@@ -1640,6 +1644,16 @@ func easyjson6601e8cdEncodeGithubComMeilisearchMeilisearchGo12(out *jwriter.Writ
 		const prefix string = ",\"avgDocumentSize\":"
 		out.RawString(prefix)
 		out.Int64(int64(in.AvgDocumentSize))
+	}
+	{
+		const prefix string = ",\"numberOfEmbeddedDocuments\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.NumberOfEmbeddedDocuments))
+	}
+	{
+		const prefix string = ",\"numberOfEmbeddings\":"
+		out.RawString(prefix)
+		out.Int64(int64(in.NumberOfEmbeddings))
 	}
 	out.RawByte('}')
 }
