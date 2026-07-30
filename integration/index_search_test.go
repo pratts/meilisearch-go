@@ -390,7 +390,7 @@ func TestIndex_SearchFacets(t *testing.T) {
 				client: sv,
 				query:  "prince",
 				request: &meilisearch.SearchRequest{
-					Facets: []string{"*"},
+					Facets: []string{"tag"},
 				},
 				filterableAttributes: []interface{}{"tag"},
 			},
@@ -418,7 +418,7 @@ func TestIndex_SearchFacets(t *testing.T) {
 				client: customSv,
 				query:  "prince",
 				request: &meilisearch.SearchRequest{
-					Facets: []string{"*"},
+					Facets: []string{"tag"},
 				},
 				filterableAttributes: []interface{}{"tag"},
 			},
