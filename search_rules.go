@@ -6,20 +6,20 @@ import (
 	"net/http"
 )
 
-func (m *meilisearch) UpdateSearchRule(uid string, params *SearchRulesRequest) (*SearchRule, error) {
+func (m *meilisearch) UpdateSearchRule(uid string, params *SearchRulesRequest) (*Task, error) {
 	return m.UpdateSearchRuleWithContext(context.Background(), uid, params)
 }
 
-func (m *meilisearch) UpdateSearchRuleWithContext(ctx context.Context, uid string, params *SearchRulesRequest) (*SearchRule, error) {
-	resp := new(SearchRule)
+func (m *meilisearch) UpdateSearchRuleWithContext(ctx context.Context, uid string, params *SearchRulesRequest) (*Task, error) {
+	resp := new(Task)
 
 	req := &internalRequest{
 		endpoint:            fmt.Sprintf("/dynamic-search-rules/%s", uid),
 		method:              http.MethodPatch,
 		contentType:         contentTypeJSON,
 		withRequest:         params,
-		withResponse:        resp,
-		acceptedStatusCodes: []int{http.StatusCreated, http.StatusOK},
+		withResponse:        &resp,
+		acceptedStatusCodes: []int{http.StatusCreated, http.StatusOK, http.StatusAccepted},
 		functionName:        "UpdateSearchRule",
 	}
 
@@ -77,18 +77,28 @@ func (m *meilisearch) GetSearchRuleWithContext(ctx context.Context, uid string) 
 	return resp, nil
 }
 
-func (m *meilisearch) DeleteSearchRule(uid string) error {
+func (m *meilisearch) DeleteSearchRule(uid *string) (*Task, error) {
 	return m.DeleteSearchRuleWithContext(context.Background(), uid)
 }
 
-func (m *meilisearch) DeleteSearchRuleWithContext(ctx context.Context, uid string) error {
+func (m *meilisearch) DeleteSearchRuleWithContext(ctx context.Context, uid *string) (*Task, error) {
+	endpoint := "/dynamic-search-rules"
+	if uid != nil {
+		endpoint += fmt.Sprintf("/%s", *uid)
+	}
+	response := new(Task)
 	req := &internalRequest{
-		endpoint:            fmt.Sprintf("/dynamic-search-rules/%s", uid),
+		endpoint:            endpoint,
 		method:              http.MethodDelete,
 		withRequest:         nil,
-		withResponse:        nil,
-		acceptedStatusCodes: []int{http.StatusNoContent},
+		withResponse:        &response,
+		acceptedStatusCodes: []int{http.StatusNoContent, http.StatusAccepted},
 		functionName:        "DeleteSearchRule",
 	}
-	return m.client.executeRequest(ctx, req)
+
+	if err := m.client.executeRequest(ctx, req); err != nil {
+		return nil, err
+	}
+
+	return response, nil
 }
