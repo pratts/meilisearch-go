@@ -6,12 +6,12 @@ type SearchRulesManager interface {
 	SearchRulesReader
 	// UpdateSearchRule update a dynamic search rule or create a new one if it doesn't exist.
 	//
-	// docs: https://www.meilisearch.com/docs/reference/api/dynamic-search-rules/update-a-dynamic-search-rule-or-create-a-new-one-if-it-doesnt-exist#body-priority-one-of-0
+	// docs: https://www.meilisearch.com/docs/reference/api/search-rules/create-or-update-a-search-rule
 	UpdateSearchRule(uid string, params *SearchRulesRequest) (*Task, error)
 
 	// UpdateSearchRuleWithContext update a dynamic search rule or create a new one if it doesn't exist with a context.
 	//
-	// docs: https://www.meilisearch.com/docs/reference/api/dynamic-search-rules/update-a-dynamic-search-rule-or-create-a-new-one-if-it-doesnt-exist#body-priority-one-of-0
+	// docs: https://www.meilisearch.com/docs/reference/api/search-rules/create-or-update-a-search-rule
 	UpdateSearchRuleWithContext(ctx context.Context, uid string, params *SearchRulesRequest) (*Task, error)
 
 	// DeleteSearchRule deletes a dynamic search rule by its unique identifier.

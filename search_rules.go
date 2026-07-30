@@ -92,7 +92,7 @@ func (m *meilisearch) DeleteSearchRuleWithContext(ctx context.Context, uid *stri
 		method:              http.MethodDelete,
 		withRequest:         nil,
 		withResponse:        &response,
-		acceptedStatusCodes: []int{http.StatusNoContent, http.StatusAccepted},
+		acceptedStatusCodes: []int{http.StatusAccepted},
 		functionName:        "DeleteSearchRule",
 	}
 
